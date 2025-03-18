@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c125c9e38f3b2a1409511d6d300365ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lossScreenCanvas: {fileID: 0}
+  lossMenuScript: {fileID: 0}
 --- !u!135 &2674703327968204487
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -154,7 +154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aaa7265866e7ddf47a4ddf2c7d6c0845, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.945
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: aaa7265866e7ddf47a4ddf2c7d6c0845, type: 3}
       propertyPath: m_LocalPosition.z

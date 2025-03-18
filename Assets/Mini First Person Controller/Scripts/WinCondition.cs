@@ -5,7 +5,10 @@ public class CarInteraction : MonoBehaviour
     // Reference to the WinMenu script to show the win screen
     public WinMenu winMenuScript;
 
-    // Player tag to identify the player (you can change this as needed)
+    // Reference to the player's inventory
+    public Inventory playerInventory;
+
+    // Player tag to identify the player
     public string playerTag = "Player";
 
     // Collision detection
@@ -14,22 +17,30 @@ public class CarInteraction : MonoBehaviour
         // Check if the object collided with is the player
         if (collision.gameObject.CompareTag(playerTag))
         {
-            // Pause the game
-            Time.timeScale = 0;
-            Debug.Log("Game Paused");
-
-            // Call the ShowWinMenu method from the WinMenu script
-            if (winMenuScript != null)
+            // Check if the player has the required items
+            if (playerInventory != null && playerInventory.HasRequiredItems())
             {
-                winMenuScript.ShowWinMenu();  // This will activate the win menu
+                // Pause the game
+                Time.timeScale = 0;
+                Debug.Log("Player has won!");
+
+                // Call the ShowWinMenu method from the WinMenu script
+                if (winMenuScript != null)
+                {
+                    winMenuScript.ShowWinMenu();  // This will activate the win menu
+                }
+                else
+                {
+                    Debug.LogWarning("WinMenu script reference is missing!");  // Warn if the script is not assigned
+                }
+
+                // Unlock the cursor and make it visible when the win menu is displayed
+                UnlockCursor();
             }
             else
             {
-                Debug.LogWarning("WinMenu script reference is missing!");  // Warn if the script is not assigned
+                Debug.Log("You do not have the required items to win.");
             }
-
-            // Unlock the cursor and make it visible when the win menu is displayed
-            UnlockCursor();
         }
     }
 
