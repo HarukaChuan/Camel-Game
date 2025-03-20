@@ -2,40 +2,69 @@ using UnityEngine;
 
 public class ObjectInteraction : MonoBehaviour
 {
-    private Camera playerCamera;
-    private RaycastHit hit;
-    public float interactionDistance = 3f;
-    public Color rayColor = Color.red; // Color of the ray (can be set in Inspector)
-
-    void Start()
-    {
-        playerCamera = Camera.main;
-    }
+    public float playerinteraction;
+    private InteractableObject currentObject;
 
     void Update()
     {
-        // Check for left mouse click (Mouse0)
-        if (Input.GetMouseButtonDown(0)) // 0 is for left mouse button
+        CheckInteraction();
+
+        // Check for interaction when 'E' is pressed and an object is detected
+        if (Input.GetKeyDown(KeyCode.E) && currentObject != null)
         {
-            // Perform a raycast from the camera's position based on the mouse position
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            
-            // Draw the ray for visualization (only in the Scene view, not in-game)
-            Debug.DrawRay(ray.origin, ray.direction * interactionDistance, rayColor, 100f); // 2f is the duration the ray stays visible in the scene view
-            
-            if (Physics.Raycast(ray, out hit, interactionDistance))
+            currentObject.Interact();
+        }
+    }
+
+    void CheckInteraction()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        
+        if (Physics.Raycast(ray, out hit, 3f))
+        {
+            if (hit.collider.CompareTag("Interactable"))
             {
-                // Check if the ray hit an interactable object
-                if (hit.collider.CompareTag("Interactable"))
+                InteractableObject newInteractable = hit.collider.GetComponent<InteractableObject>();
+
+                if (newInteractable != null && newInteractable.enabled)
                 {
-                    // Try to get the InteractableObject component on the hit object
-                    InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
-                    if (interactable != null)
-                    {
-                        interactable.Interact(); // Call the Interact method from InteractableObject
-                    }
+                    SetNewCurrentInteractable(newInteractable);
+                }
+                else
+                {
+                    DisableCurrentInteractable();
                 }
             }
+            else
+            {
+                DisableCurrentInteractable();
+            }
+        }
+        else
+        {
+            DisableCurrentInteractable();
+        }
+    }
+
+    void SetNewCurrentInteractable(InteractableObject newInteractable)
+    {
+        // If there's an already selected object, disable the outline first
+        if (currentObject != null)
+        {
+            DisableCurrentInteractable();
+        }
+
+        currentObject = newInteractable;
+        //currentObject.EnableOutline(); // Assuming EnableOutline is a method in InteractableObject
+    }
+
+    void DisableCurrentInteractable()
+    {
+        if (currentObject != null)
+        {
+        //    currentObject.DisableOutline(); // Assuming DisableOutline is a method in InteractableObject
+            currentObject = null;
         }
     }
 }
