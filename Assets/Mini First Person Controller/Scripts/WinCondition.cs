@@ -6,7 +6,7 @@ public class CarInteraction : MonoBehaviour
     public WinMenu winMenuScript;
 
     // Reference to the player's inventory
-    public Inventory playerInventory;
+    public PlayerInventory playerInventory;
 
     // Player tag to identify the player
     public string playerTag = "Player";
@@ -18,7 +18,7 @@ public class CarInteraction : MonoBehaviour
         if (collision.gameObject.CompareTag(playerTag))
         {
             // Check if the player has the required items
-            if (playerInventory != null && playerInventory.HasRequiredItems())
+            if (playerInventory != null && playerInventory.hasKey && playerInventory.isOilContainerFull)
             {
                 // Pause the game
                 Time.timeScale = 0;

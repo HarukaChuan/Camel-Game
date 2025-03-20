@@ -8,6 +8,9 @@ TagManager:
   - Key
   - Gas
   - Interactable
+  - OilContainer
+  - OilStation
+  - Car
   layers:
   - Default
   - TransparentFX
