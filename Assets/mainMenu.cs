@@ -5,9 +5,12 @@ public class MainMenu : MonoBehaviour
 {
     // Reference to the button in the UI
     public Button startButton;
-    
+
     // Reference to the canvas for the Main Menu
     public Canvas mainMenuCanvas;
+
+    // Reference to the CarInteraction script to trigger the introduction text
+    public CarInteraction carInteractionScript;
 
     void Start()
     {
@@ -51,7 +54,7 @@ public class MainMenu : MonoBehaviour
 
     private System.Collections.IEnumerator HideMainMenuAndStartGame()
     {
-        // Optionally, fade out or hide the main menu UI
+        // Hide the main menu
         if (mainMenuCanvas != null)
         {
             mainMenuCanvas.gameObject.SetActive(false);  // Hide the main menu
@@ -62,6 +65,13 @@ public class MainMenu : MonoBehaviour
 
         // Lock and hide the cursor when the game starts
         LockCursor();
+
+        // Now trigger the introduction sequence (start the CarInteraction script)
+        if (carInteractionScript != null)
+        {
+            // Start the introduction text sequence after the main menu is hidden
+            carInteractionScript.StartIntroductionText();
+        }
 
         // No scene is being loaded anymore, game continues from this point
         yield return null;  // This just ensures the transition happens in the next frame

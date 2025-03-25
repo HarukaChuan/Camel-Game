@@ -5,10 +5,10 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory Instance;
 
-    private List<Item> items = new List<Item>();
-    public bool hasKey = false;
-    public bool hasOilContainer = false;
-    public bool isOilContainerFull = false;
+    private List<Item> items = new List<Item>();  // List of collected items
+    public bool hasKey = false;  // Track if the player has the key
+    public bool hasOilContainer = false;  // Track if the player has the oil container
+    public bool isOilContainerFull = false;  // Track if the oil container is full
 
     void Awake()
     {
@@ -35,6 +35,13 @@ public class PlayerInventory : MonoBehaviour
         {
             hasOilContainer = true;
         }
+
+        // After collecting an item, update the text on the screen
+        CarInteraction carInteraction = FindObjectOfType<CarInteraction>();
+        if (carInteraction != null)
+        {
+            carInteraction.UpdateInteractionText();
+        }
     }
 
     public void RefillOilContainer()
@@ -43,6 +50,13 @@ public class PlayerInventory : MonoBehaviour
         {
             isOilContainerFull = true;
             Debug.Log("Oil container refilled.");
+
+            // Update the interaction text after refilling the oil container
+            CarInteraction carInteraction = FindObjectOfType<CarInteraction>();
+            if (carInteraction != null)
+            {
+                carInteraction.UpdateInteractionText();
+            }
         }
     }
 
