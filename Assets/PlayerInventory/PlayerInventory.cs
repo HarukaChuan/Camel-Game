@@ -27,6 +27,7 @@ public class PlayerInventory : MonoBehaviour
         items.Add(item);
         Debug.Log(item.itemName + " added to inventory.");
 
+        // Update player status based on the item collected
         if (item.CompareTag("Key"))
         {
             hasKey = true;
@@ -36,12 +37,8 @@ public class PlayerInventory : MonoBehaviour
             hasOilContainer = true;
         }
 
-        // After collecting an item, update the text on the screen
-        CarInteraction carInteraction = FindObjectOfType<CarInteraction>();
-        if (carInteraction != null)
-        {
-            carInteraction.UpdateInteractionText();
-        }
+        // Call to update interaction text after adding the item
+        InteractionText.Instance.UpdateInteractionText();  // Using the Singleton of InteractionText
     }
 
     public void RefillOilContainer()
@@ -50,13 +47,7 @@ public class PlayerInventory : MonoBehaviour
         {
             isOilContainerFull = true;
             Debug.Log("Oil container refilled.");
-
-            // Update the interaction text after refilling the oil container
-            CarInteraction carInteraction = FindObjectOfType<CarInteraction>();
-            if (carInteraction != null)
-            {
-                carInteraction.UpdateInteractionText();
-            }
+            InteractionText.Instance.UpdateInteractionText();  // Updating text after refill
         }
     }
 

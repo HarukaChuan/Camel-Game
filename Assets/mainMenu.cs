@@ -70,7 +70,7 @@ public class MainMenu : MonoBehaviour
         if (carInteractionScript != null)
         {
             // Start the introduction text sequence after the main menu is hidden
-            carInteractionScript.StartIntroductionText();
+           // carInteractionScripSt.StartIntroductionText();
         }
 
         // No scene is being loaded anymore, game continues from this point

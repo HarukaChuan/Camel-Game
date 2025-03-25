@@ -10,12 +10,8 @@ public class Item : MonoBehaviour
         {
             PlayerInventory.Instance.AddItem(this);
 
-            // After item collection, update the interaction text
-            CarInteraction carInteraction = collision.gameObject.GetComponent<CarInteraction>();
-            if (carInteraction != null)
-            {
-                carInteraction.UpdateInteractionText();
-            }
+            // After item collection, update the interaction text (no need to check for CarInteraction)
+            InteractionText.Instance.UpdateInteractionText(); // Direct call to the InteractionText Singleton
 
             Destroy(gameObject);  // Destroy the item after it's collected
         }
