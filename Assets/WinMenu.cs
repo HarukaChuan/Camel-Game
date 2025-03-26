@@ -23,6 +23,7 @@ public class WinMenu : MonoBehaviour
         {
             restartButton.onClick.AddListener(RestartGame);  // Add the RestartGame method to the button's click event
         }
+         Time.timeScale = 0; // Pauses the game, stopping all gameplay mechanics, animations, etc.
     }
 
     void Update()
